@@ -32,7 +32,7 @@ class CreateNovelAction extends ParentAction
             'description',
             'author',
             'artist',
-            'slug'
+            'categories'
         ]);
 
         return $this->createNovelTask->run($data);

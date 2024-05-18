@@ -21,6 +21,7 @@ class CreateVolumnTask extends ParentTask
     public function run(array $data): Volumn
     {
         try {
+            $data['slug'] = slugCreate($data['title']);
             $volumn = $this->repository->create($data);
             VolumnCreatedEvent::dispatch($volumn);
 

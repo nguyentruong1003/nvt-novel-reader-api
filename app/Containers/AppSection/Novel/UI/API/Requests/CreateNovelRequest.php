@@ -13,6 +13,7 @@ class CreateNovelRequest extends ParentRequest
 
     protected array $decode = [
         // 'id',
+        'categories.*'
     ];
 
     protected array $urlParameters = [

@@ -4,6 +4,8 @@ namespace App\Containers\AppSection\Novel\UI\API\Transformers;
 
 use Apiato\Core\Traits\HashIdTrait;
 use App\Containers\AppSection\Novel\Models\Novel;
+use App\Containers\AppSection\NovelCategory\UI\API\Transformers\NovelCategoryTransformer;
+use App\Containers\AppSection\Volumn\UI\API\Transformers\VolumnTransformer;
 use App\Ship\Parents\Transformers\Transformer as ParentTransformer;
 
 class NovelTransformer extends ParentTransformer
@@ -11,7 +13,8 @@ class NovelTransformer extends ParentTransformer
     use HashIdTrait;
 
     protected array $defaultIncludes = [
-
+        'categories',
+        'volumns'
     ];
 
     protected array $availableIncludes = [
@@ -24,9 +27,12 @@ class NovelTransformer extends ParentTransformer
             'object' => $novel->getResourceKey(),
             'id' => $novel->getHashedKey(),
             'title' => $novel->title,
-            'user_id' => $this->encode($novel->user_id),
+            'ower_id' => $this->encode($novel->user_id),
+            'owner' => $novel->owner->name,
             'status_id' => $this->encode($novel->status_id),
+            'status' => $novel->status->title,
             'type_id' => $this->encode($novel->type_id),
+            'type' => $novel->type->title,
             'other_name' => $novel->other_name,
             'description' => $novel->description,
             'author' => $novel->author,
@@ -45,5 +51,19 @@ class NovelTransformer extends ParentTransformer
         // ], $response);
 
         return $response;
+    }
+
+    public function includeCategories(Novel $novel)
+    {
+        $categories = $novel->categories;
+        if (!$categories) return null;
+        return $this->collection($categories, new NovelCategoryTransformer());
+    }
+
+    public function includeVolumns(Novel $novel)
+    {
+        $volumns = $novel->volumns;
+        if (!$volumns) return null;
+        return $this->collection($volumns, new VolumnTransformer());
     }
 }

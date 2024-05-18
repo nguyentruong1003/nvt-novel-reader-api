@@ -9,6 +9,7 @@ use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Exceptions\UpdateResourceFailedException;
 use App\Ship\Parents\Tasks\Task as ParentTask;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateNovelTask extends ParentTask
 {
@@ -24,7 +25,12 @@ class UpdateNovelTask extends ParentTask
     public function run(array $data, $id): Novel
     {
         try {
-            $novel = $this->repository->update($data, $id);
+            $data['slug'] = slugCreate($data['title']);
+            $data['user_id'] = $data['user_id'] ?? Auth::user()->id;
+            $data['status_id'] = $data['status_id'] ?? 1;
+            $data['type_id'] = $data['type_id'] ?? 1;
+            $novel = $this->repository->update($data, $id);            
+            $novel->categories()->sync($data['categories']);
             NovelUpdatedEvent::dispatch($novel);
 
             return $novel;

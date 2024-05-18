@@ -2,6 +2,11 @@
 
 namespace App\Containers\AppSection\Novel\Models;
 
+use App\Containers\AppSection\NovelCategory\Models\NovelCategory;
+use App\Containers\AppSection\NovelStatus\Models\NovelStatus;
+use App\Containers\AppSection\NovelType\Models\NovelType;
+use App\Containers\AppSection\User\Models\User;
+use App\Containers\AppSection\Volumn\Models\Volumn;
 use App\Ship\Parents\Models\Model as ParentModel;
 
 class Novel extends ParentModel
@@ -22,4 +27,24 @@ class Novel extends ParentModel
         'artist',
         'slug'
     ];
+
+    public function categories() {
+        return $this->belongsToMany(NovelCategory::class, 'novel_has_novel_categories', 'novel_id', 'novel_category_id');
+    }
+
+    public function type() {
+        return $this->hasOne(NovelType::class, 'id', 'type_id');
+    }
+
+    public function status() {
+        return $this->hasOne(NovelStatus::class, 'id', 'status_id');
+    }
+
+    public function owner() {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function volumns() {
+        return $this->hasMany(Volumn::class);
+    }
 }

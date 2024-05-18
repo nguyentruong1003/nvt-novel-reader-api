@@ -34,7 +34,7 @@ class UpdateNovelAction extends ParentAction
             'description',
             'author',
             'artist',
-            'slug'
+            'categories'
         ]);
 
         return $this->updateNovelTask->run($data, $request->id);
