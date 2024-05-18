@@ -10,7 +10,7 @@ return new class() extends Migration {
         Schema::create('novel_categories', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('slug')->nullable();
             $table->timestamps();
             $table->softDeletes();
