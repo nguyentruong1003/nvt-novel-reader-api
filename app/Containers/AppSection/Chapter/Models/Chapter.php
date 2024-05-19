@@ -22,7 +22,7 @@ class Chapter extends ParentModel
     ];
 
     public function comments() {
-        return $this->hasMany(Comment::class, 'model_id', 'id')->where('comments.model_type', Comment::class)->whereNull('parent_id');
+        return $this->hasMany(Comment::class, 'model_id', 'id')->where('comments.model_type', Chapter::class)->whereNull('parent_id');
     }
 
 }
