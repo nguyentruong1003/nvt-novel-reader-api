@@ -3,6 +3,7 @@
 namespace App\Containers\AppSection\Discussion\UI\API\Transformers;
 
 use Apiato\Core\Traits\HashIdTrait;
+use App\Containers\AppSection\Comment\UI\API\Transformers\CommentTransformer;
 use App\Containers\AppSection\Discussion\Models\Discussion;
 use App\Ship\Parents\Transformers\Transformer as ParentTransformer;
 
@@ -15,7 +16,7 @@ class DiscussionTransformer extends ParentTransformer
     ];
 
     protected array $availableIncludes = [
-
+        'comments'
     ];
 
     public function transform(Discussion $discussion): array
@@ -42,5 +43,12 @@ class DiscussionTransformer extends ParentTransformer
         // ], $response);
 
         return $response;
+    }
+
+    public function includeComments(Discussion $discussion)
+    {
+        $comments = $discussion->comments;
+        if (!$comments) return null;
+        return $this->collection($comments, new CommentTransformer());
     }
 }
