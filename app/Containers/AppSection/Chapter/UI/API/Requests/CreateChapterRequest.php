@@ -13,6 +13,7 @@ class CreateChapterRequest extends ParentRequest
 
     protected array $decode = [
         // 'id',
+        'volumn_id'
     ];
 
     protected array $urlParameters = [

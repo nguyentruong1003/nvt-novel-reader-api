@@ -2,6 +2,7 @@
 
 namespace App\Containers\AppSection\Volumn\Models;
 
+use App\Containers\AppSection\Chapter\Models\Chapter;
 use App\Ship\Parents\Models\Model as ParentModel;
 
 class Volumn extends ParentModel
@@ -16,4 +17,8 @@ class Volumn extends ParentModel
         'title',
         'slug'
     ];
+
+    public function chapters() {
+        return $this->hasMany(Chapter::class);
+    }
 }

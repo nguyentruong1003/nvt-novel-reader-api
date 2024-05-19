@@ -29,8 +29,8 @@ class UpdateChapterAction extends ParentAction
             'volumn_id',
             'content',
             'word_count',
-            'slug',
-            'user_id'
+            'user_id',
+            'title'
         ]);
 
         return $this->updateChapterTask->run($data, $request->id);

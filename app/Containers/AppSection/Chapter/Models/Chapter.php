@@ -16,6 +16,7 @@ class Chapter extends ParentModel
         'content',
         'word_count',
         'slug',
-        'user_id'
+        'user_id',
+        'title'
     ];
 }

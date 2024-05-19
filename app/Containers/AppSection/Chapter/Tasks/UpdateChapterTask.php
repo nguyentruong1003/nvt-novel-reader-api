@@ -9,6 +9,7 @@ use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Exceptions\UpdateResourceFailedException;
 use App\Ship\Parents\Tasks\Task as ParentTask;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateChapterTask extends ParentTask
 {
@@ -24,6 +25,9 @@ class UpdateChapterTask extends ParentTask
     public function run(array $data, $id): Chapter
     {
         try {
+            $data['slug'] = slugCreate($data['title']);
+            $data['user_id'] = Auth::user()->id;
+            $data['word_count'] = $data['word_count'] ?? str_word_count($data['content']);
             $chapter = $this->repository->update($data, $id);
             ChapterUpdatedEvent::dispatch($chapter);
 

@@ -3,6 +3,7 @@
 namespace App\Containers\AppSection\Volumn\UI\API\Transformers;
 
 use Apiato\Core\Traits\HashIdTrait;
+use App\Containers\AppSection\Chapter\UI\API\Transformers\ChapterTransformer;
 use App\Containers\AppSection\Volumn\Models\Volumn;
 use App\Ship\Parents\Transformers\Transformer as ParentTransformer;
 
@@ -11,7 +12,7 @@ class VolumnTransformer extends ParentTransformer
     use HashIdTrait;
 
     protected array $defaultIncludes = [
-
+    
     ];
 
     protected array $availableIncludes = [
@@ -26,6 +27,7 @@ class VolumnTransformer extends ParentTransformer
             'novel_id' => $this->encode($volumn->novel_id),
             'title' => $volumn->title,
             'slug' => $volumn->slug,
+            'chapters' => $volumn->chapters->select('title','created_at')->toArray(),
 
             'created_at' => $volumn->created_at,
             'updated_at' => $volumn->updated_at,

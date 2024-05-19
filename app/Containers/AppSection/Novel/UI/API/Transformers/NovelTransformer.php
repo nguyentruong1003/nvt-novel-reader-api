@@ -13,12 +13,11 @@ class NovelTransformer extends ParentTransformer
     use HashIdTrait;
 
     protected array $defaultIncludes = [
-        'categories',
-        'volumns'
+        // 'categories'
     ];
 
     protected array $availableIncludes = [
-
+        'volumns'
     ];
 
     public function transform(Novel $novel): array
@@ -33,6 +32,7 @@ class NovelTransformer extends ParentTransformer
             'status' => $novel->status->title,
             'type_id' => $this->encode($novel->type_id),
             'type' => $novel->type->title,
+            'categorylist' => $novel->categories->pluck('title')->toArray(),
             'other_name' => $novel->other_name,
             'description' => $novel->description,
             'author' => $novel->author,
