@@ -2,6 +2,7 @@
 
 namespace App\Containers\AppSection\Chapter\Models;
 
+use App\Containers\AppSection\Comment\Models\Comment;
 use App\Ship\Parents\Models\Model as ParentModel;
 
 class Chapter extends ParentModel
@@ -19,4 +20,9 @@ class Chapter extends ParentModel
         'user_id',
         'title'
     ];
+
+    public function comments() {
+        return $this->hasMany(Comment::class, 'model_id', 'id')->where('comments.model_type', Comment::class)->whereNull('parent_id');
+    }
+
 }

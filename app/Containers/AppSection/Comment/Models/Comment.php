@@ -2,6 +2,7 @@
 
 namespace App\Containers\AppSection\Comment\Models;
 
+use App\Containers\AppSection\User\Models\User;
 use App\Ship\Parents\Models\Model as ParentModel;
 
 class Comment extends ParentModel
@@ -18,4 +19,13 @@ class Comment extends ParentModel
         'model_id',
         'parent_id'
     ];
+
+    public function author() {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function replies() {
+        return $this->hasMany(Comment::class, 'parent_id', 'id');
+    }
+
 }

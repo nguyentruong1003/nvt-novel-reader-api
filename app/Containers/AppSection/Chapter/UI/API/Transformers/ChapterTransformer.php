@@ -4,6 +4,7 @@ namespace App\Containers\AppSection\Chapter\UI\API\Transformers;
 
 use Apiato\Core\Traits\HashIdTrait;
 use App\Containers\AppSection\Chapter\Models\Chapter;
+use App\Containers\AppSection\Comment\UI\API\Transformers\CommentTransformer;
 use App\Ship\Parents\Transformers\Transformer as ParentTransformer;
 
 class ChapterTransformer extends ParentTransformer
@@ -15,7 +16,7 @@ class ChapterTransformer extends ParentTransformer
     ];
 
     protected array $availableIncludes = [
-
+        'comments'
     ];
 
     public function transform(Chapter $chapter): array
@@ -41,5 +42,13 @@ class ChapterTransformer extends ParentTransformer
         // ], $response);
 
         return $response;
+    }
+
+    
+    public function includeComments(Chapter $chapter)
+    {
+        $comments = $chapter->comments;
+        if (!$comments) return null;
+        return $this->collection($comments, new CommentTransformer());
     }
 }

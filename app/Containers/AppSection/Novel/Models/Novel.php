@@ -2,6 +2,7 @@
 
 namespace App\Containers\AppSection\Novel\Models;
 
+use App\Containers\AppSection\Comment\Models\Comment;
 use App\Containers\AppSection\NovelCategory\Models\NovelCategory;
 use App\Containers\AppSection\NovelStatus\Models\NovelStatus;
 use App\Containers\AppSection\NovelType\Models\NovelType;
@@ -47,4 +48,9 @@ class Novel extends ParentModel
     public function volumns() {
         return $this->hasMany(Volumn::class);
     }
+
+    public function comments() {
+        return $this->hasMany(Comment::class, 'model_id', 'id')->where('comments.model_type', Novel::class)->whereNull('parent_id');
+    }
+
 }

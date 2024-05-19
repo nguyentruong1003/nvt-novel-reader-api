@@ -13,6 +13,8 @@ class CreateCommentRequest extends ParentRequest
 
     protected array $decode = [
         // 'id',
+        'model_id',
+        'parent_id'
     ];
 
     protected array $urlParameters = [

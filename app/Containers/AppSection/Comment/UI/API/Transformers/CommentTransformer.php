@@ -11,7 +11,7 @@ class CommentTransformer extends ParentTransformer
     use HashIdTrait;
 
     protected array $defaultIncludes = [
-
+        'replies'
     ];
 
     protected array $availableIncludes = [
@@ -24,7 +24,8 @@ class CommentTransformer extends ParentTransformer
             'object' => $comment->getResourceKey(),
             'id' => $comment->getHashedKey(),
             'content' => $comment->content,
-            'user_id' => $this->encode($comment->user_id),
+            'author_id' => $this->encode($comment->user_id),
+            'author_name' => $comment->author->name ?? '',
             'model_type' => $comment->model_type,
             'model_id' => $this->encode($comment->model_id),
             'parent_id' => $this->encode($comment->parent_id),
@@ -41,5 +42,12 @@ class CommentTransformer extends ParentTransformer
         // ], $response);
 
         return $response;
+    }
+
+    public function includeReplies(Comment $comment)
+    {
+        $replies = $comment->replies;
+        if (!$replies) return null;
+        return $this->collection($replies, new CommentTransformer());
     }
 }

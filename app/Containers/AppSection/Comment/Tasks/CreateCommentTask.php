@@ -2,11 +2,14 @@
 
 namespace App\Containers\AppSection\Comment\Tasks;
 
+use App\Containers\AppSection\Chapter\Models\Chapter;
 use App\Containers\AppSection\Comment\Data\Repositories\CommentRepository;
 use App\Containers\AppSection\Comment\Events\CommentCreatedEvent;
 use App\Containers\AppSection\Comment\Models\Comment;
+use App\Containers\AppSection\Novel\Models\Novel;
 use App\Ship\Exceptions\CreateResourceFailedException;
 use App\Ship\Parents\Tasks\Task as ParentTask;
+use Illuminate\Support\Facades\Auth;
 
 class CreateCommentTask extends ParentTask
 {
@@ -21,6 +24,9 @@ class CreateCommentTask extends ParentTask
     public function run(array $data): Comment
     {
         try {
+            if (!isset($data['model_type']) || $data['model_type'] == 'novel') $data['model_type'] = Novel::class;
+            if (isset($data['model_type']) && $data['model_type'] == 'chapter') $data['model_type'] = Chapter::class;
+            $data['user_id'] = Auth::user()->id;
             $comment = $this->repository->create($data);
             CommentCreatedEvent::dispatch($comment);
 

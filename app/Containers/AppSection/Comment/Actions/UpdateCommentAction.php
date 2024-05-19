@@ -26,11 +26,7 @@ class UpdateCommentAction extends ParentAction
     {
         $data = $request->sanitizeInput([
             // add your request data here
-            'content',
-            'user_id',
-            'model_type',
-            'model_id',
-            'parent_id'
+            'content'
         ]);
 
         return $this->updateCommentTask->run($data, $request->id);
