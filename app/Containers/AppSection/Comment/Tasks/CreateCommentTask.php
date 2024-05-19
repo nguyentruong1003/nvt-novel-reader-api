@@ -28,6 +28,10 @@ class CreateCommentTask extends ParentTask
             if (!isset($data['model_type']) || $data['model_type'] == 'novel') $data['model_type'] = Novel::class;
             if (isset($data['model_type']) && $data['model_type'] == 'chapter') $data['model_type'] = Chapter::class;
             if (isset($data['model_type']) && $data['model_type'] == 'discussion') $data['model_type'] = Discussion::class;
+            if (isset($data['parent_id'])) {
+                $parent = $this->repository->find($data['parent_id']);
+                if (isset($parent->parent_id)) $data['parent_id'] = $parent->parent_id;
+            }
             $data['user_id'] = Auth::user()->id;
             $comment = $this->repository->create($data);
             CommentCreatedEvent::dispatch($comment);
