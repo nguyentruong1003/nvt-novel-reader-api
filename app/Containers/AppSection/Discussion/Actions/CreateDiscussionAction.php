@@ -27,8 +27,7 @@ class CreateDiscussionAction extends ParentAction
             'title',
             'content',
             'type',
-            'novel_id',
-            'user_id'
+            'novel_id'
         ]);
 
         return $this->createDiscussionTask->run($data);

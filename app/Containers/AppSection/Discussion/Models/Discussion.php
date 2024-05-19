@@ -16,6 +16,7 @@ class Discussion extends ParentModel
         'content',
         'type',
         'novel_id',
-        'user_id'
+        'user_id',
+        'slug'
     ];
 }

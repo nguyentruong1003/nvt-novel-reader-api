@@ -4,6 +4,7 @@ namespace App\Containers\AppSection\Novel\UI\API\Transformers;
 
 use Apiato\Core\Traits\HashIdTrait;
 use App\Containers\AppSection\Comment\UI\API\Transformers\CommentTransformer;
+use App\Containers\AppSection\Discussion\UI\API\Transformers\DiscussionTransformer;
 use App\Containers\AppSection\Novel\Models\Novel;
 use App\Containers\AppSection\NovelCategory\UI\API\Transformers\NovelCategoryTransformer;
 use App\Containers\AppSection\Volumn\UI\API\Transformers\VolumnTransformer;
@@ -19,7 +20,8 @@ class NovelTransformer extends ParentTransformer
 
     protected array $availableIncludes = [
         'volumns',
-        'comments'
+        'comments',
+        'discussions'
     ];
 
     public function transform(Novel $novel): array
@@ -75,5 +77,12 @@ class NovelTransformer extends ParentTransformer
         $comments = $novel->comments;
         if (!$comments) return null;
         return $this->collection($comments, new CommentTransformer());
+    }
+
+    public function includeDiscussions(Novel $novel)
+    {
+        $discussions = $novel->discussions;
+        if (!$discussions) return null;
+        return $this->collection($discussions, new DiscussionTransformer());
     }
 }

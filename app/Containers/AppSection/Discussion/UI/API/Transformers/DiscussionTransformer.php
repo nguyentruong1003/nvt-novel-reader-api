@@ -28,6 +28,7 @@ class DiscussionTransformer extends ParentTransformer
             'type' => $discussion->type,
             'novel_id' => $this->encode($discussion->novel_id),
             'user_id' => $this->encode($discussion->user_id),
+            'slug' => $discussion->slug,
 
             'created_at' => $discussion->created_at,
             'updated_at' => $discussion->updated_at,

@@ -28,9 +28,7 @@ class UpdateDiscussionAction extends ParentAction
             // add your request data here
             'title',
             'content',
-            'type',
-            'novel_id',
-            'user_id'
+            'type'
         ]);
 
         return $this->updateDiscussionTask->run($data, $request->id);

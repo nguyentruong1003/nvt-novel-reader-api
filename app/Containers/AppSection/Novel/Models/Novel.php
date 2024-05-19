@@ -3,6 +3,7 @@
 namespace App\Containers\AppSection\Novel\Models;
 
 use App\Containers\AppSection\Comment\Models\Comment;
+use App\Containers\AppSection\Discussion\Models\Discussion;
 use App\Containers\AppSection\NovelCategory\Models\NovelCategory;
 use App\Containers\AppSection\NovelStatus\Models\NovelStatus;
 use App\Containers\AppSection\NovelType\Models\NovelType;
@@ -54,4 +55,7 @@ class Novel extends ParentModel
         return $this->hasMany(Comment::class, 'model_id', 'id')->where('comments.model_type', Novel::class)->whereNull('parent_id');
     }
 
+    public function discussions() {
+        return $this->hasMany(Discussion::class);
+    }
 }

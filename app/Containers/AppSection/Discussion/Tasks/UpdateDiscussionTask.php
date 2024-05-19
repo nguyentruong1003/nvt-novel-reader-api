@@ -2,6 +2,7 @@
 
 namespace App\Containers\AppSection\Discussion\Tasks;
 
+use Apiato\Core\Traits\HashIdTrait;
 use App\Containers\AppSection\Discussion\Data\Repositories\DiscussionRepository;
 use App\Containers\AppSection\Discussion\Events\DiscussionUpdatedEvent;
 use App\Containers\AppSection\Discussion\Models\Discussion;
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UpdateDiscussionTask extends ParentTask
 {
+    use HashIdTrait;
+
     public function __construct(
         protected readonly DiscussionRepository $repository,
     ) {
@@ -24,6 +27,10 @@ class UpdateDiscussionTask extends ParentTask
     public function run(array $data, $id): Discussion
     {
         try {
+            $old_data = $this->repository->find($id);
+            if (isset($data['title']) && $data['title'] != $old_data->title) {
+                $data['slug'] = slugCreate($data['title'], $this->encode($id));
+            }
             $discussion = $this->repository->update($data, $id);
             DiscussionUpdatedEvent::dispatch($discussion);
 

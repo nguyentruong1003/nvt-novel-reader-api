@@ -13,6 +13,7 @@ class CreateDiscussionRequest extends ParentRequest
 
     protected array $decode = [
         // 'id',
+        'novel_id'
     ];
 
     protected array $urlParameters = [

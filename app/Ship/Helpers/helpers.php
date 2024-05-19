@@ -96,6 +96,7 @@ function removeStringUtf8($str)
     return $str;
 }
 
-function slugCreate(string $value) {
-    return strtolower(str_replace(' ', '-', preg_replace('/[^a-z0-9\s]/i','', removeStringUtf8($value))));
+function slugCreate(string $value, string $id = '') {
+    if (isset($id)) $id = strtolower($id) . '-';
+    return $id . strtolower(str_replace(' ', '-', preg_replace('/[^a-z0-9\s]/i','', removeStringUtf8($value))));
 }
