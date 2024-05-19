@@ -32,7 +32,8 @@ class CreateNovelAction extends ParentAction
             'description',
             'author',
             'artist',
-            'categories'
+            'categories',
+            'note'
         ]);
 
         return $this->createNovelTask->run($data);

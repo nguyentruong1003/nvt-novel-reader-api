@@ -26,7 +26,8 @@ class Novel extends ParentModel
         'description',
         'author',
         'artist',
-        'slug'
+        'slug',
+        'note'
     ];
 
     public function categories() {

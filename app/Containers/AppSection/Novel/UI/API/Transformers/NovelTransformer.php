@@ -40,6 +40,7 @@ class NovelTransformer extends ParentTransformer
             'author' => $novel->author,
             'artist' => $novel->artist,
             'slug' => $novel->slug,
+            'note' => $novel->note,
 
             'created_at' => $novel->created_at,
             'updated_at' => $novel->updated_at,
